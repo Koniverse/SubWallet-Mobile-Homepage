@@ -5,20 +5,29 @@ import MobileDetect from "mobile-detect";
 const detect = new MobileDetect(navigator.userAgent, 1200);
 const isAndroid = detect.os() === 'AndroidOS'
 const isIOS = detect.os() === 'iOS'
+const isMobile = isIOS || isAndroid;
 const iOSLink = '#'
 const androidLink = '#'
 
 const openLink = function(url: string) {
     window.location.replace(url)
 }
-setTimeout(() => {
-    if (isIOS) {
-        openLink(iOSLink)
-    } else if (isAndroid) {
-        openLink(androidLink)
-    }
-}, 999)
 
+if (isMobile) {
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const mobileOpenUrl = urlSearchParams.get('url');
+    if (mobileOpenUrl) {
+        openLink(`subwallet://browser/?url=${encodeURIComponent(mobileOpenUrl)}`)
+    }
+
+    setTimeout(() => {
+        if (isIOS) {
+            openLink(iOSLink)
+        } else if (isAndroid) {
+            openLink(androidLink)
+        }
+    },  333)
+}
 
 function App() {
     return (
