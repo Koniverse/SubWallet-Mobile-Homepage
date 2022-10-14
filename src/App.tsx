@@ -6,8 +6,8 @@ const detect = new MobileDetect(navigator.userAgent, 1200);
 const isAndroid = detect.os() === 'AndroidOS'
 const isIOS = detect.os() === 'iOS'
 const isMobile = isIOS || isAndroid;
-const iOSLink = '#'
-const androidLink = '#'
+const iOSLink = 'https://testflight.apple.com/join/ZW3pUbWj'
+const androidLink = 'https://play.google.com/store/apps/details?id=app.subwallet.mobile'
 
 const openLink = function(url: string) {
     window.location.replace(url)
@@ -26,7 +26,7 @@ if (isMobile) {
         } else if (isAndroid) {
             openLink(androidLink)
         }
-    },  333)
+    },  666)
 }
 
 function App() {
