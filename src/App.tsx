@@ -6,7 +6,7 @@ const detect = new MobileDetect(navigator.userAgent, 1200);
 const isAndroid = detect.os() === 'AndroidOS'
 const isIOS = detect.os() === 'iOS'
 const isMobile = isIOS || isAndroid;
-const iOSLink = 'https://testflight.apple.com/join/ZW3pUbWj'
+const iOSLink = 'https://apps.apple.com/vn/app/subwallet-polkadot-wallet/id1633050285'
 const androidLink = 'https://play.google.com/store/apps/details?id=app.subwallet.mobile'
 
 const openLink = function(url: string) {
