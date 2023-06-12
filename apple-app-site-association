@@ -1,0 +1,10 @@
+{
+  "applinks": {
+      "details": [
+           {
+             "appIDs": [ "ZUZ7T3GQMT.app.subwallet.mobile" ],
+             "paths": ["NOT *", "/browser", "/send", "/sign", "/connect"]
+           }
+       ]
+   }
+}
