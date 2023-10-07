@@ -23,7 +23,7 @@ if (isMobile) {
     setTimeout(() => {
         // Fix error auto open app store with deeplink
         if (isIOS && !mobileOpenUrl) {
-            openLink(iOSLink)
+            // openLink(iOSLink) // Disable on iOS only
         } else if (isAndroid) {
             openLink(androidLink)
         }
