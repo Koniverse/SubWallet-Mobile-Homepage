@@ -20,14 +20,13 @@ if (isMobile) {
         openLink(`subwallet://browser/?url=${encodeURIComponent(mobileOpenUrl)}`)
     }
 
-    setTimeout(() => {
-        // Fix error auto open app store with deeplink
-        if (isIOS && !mobileOpenUrl) {
-            // openLink(iOSLink) // Disable on iOS only
-        } else if (isAndroid) {
-            openLink(androidLink)
-        }
-    },  666)
+    // setTimeout(() => {
+    //     if (isIOS && !mobileOpenUrl) {
+    //         openLink(iOSLink) // Disable on iOS only
+    //     } else if (isAndroid) {
+    //         openLink(androidLink)
+    //     }
+    // },  666)
 }
 
 function App() {
