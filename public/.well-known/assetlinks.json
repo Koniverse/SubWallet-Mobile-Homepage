@@ -1,11 +1,9 @@
-[
-  {
-    "relation": ["delegate_permission/common.handle_all_urls"],
-    "target": {
-      "namespace": "android_app",
-      "package_name": "app.subwallet.mobile",
-      "sha256_cert_fingerprints":
-        ["82:3D:8D:C9:B0:CF:D0:FF:16:DA:81:06:15:3E:C1:3A:4A:D2:6A:45:97:FB:9D:5F:06:66:F9:59:A2:20:01:2A"]
-    }
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "app.subwallet.mobile",
+    "sha256_cert_fingerprints":
+    ["90:11:AF:48:DB:31:01:0F:B2:15:94:51:E6:F3:AA:34:E7:F1:70:D2:71:3C:55:BE:73:AE:2E:0E:2E:B3:F3:93"]
   }
-]
+}]
