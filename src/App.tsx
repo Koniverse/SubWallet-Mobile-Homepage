@@ -13,11 +13,17 @@ const openLink = function(url: string) {
     window.location.replace(url)
 }
 
+const transformUniversalToNativeDeepLink = function (url: string) {
+  return url.replace('https://mobile.subwallet.app/', 'subwallet://');
+}
+
 if (isMobile) {
     const urlSearchParams = new URLSearchParams(window.location.search);
     const mobileOpenUrl = urlSearchParams.get('url');
     if (mobileOpenUrl) {
         openLink(`subwallet://browser/?url=${encodeURIComponent(mobileOpenUrl)}`)
+    } else {
+      openLink(transformUniversalToNativeDeepLink(window.location.href))
     }
 
     // setTimeout(() => {
