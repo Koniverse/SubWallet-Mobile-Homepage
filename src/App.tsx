@@ -18,6 +18,9 @@ const transformUniversalToNativeDeepLink = function (url: string) {
 }
 
 if (isMobile) {
+  if (isIOS) {
+    openLink(iOSLink)
+  } else {
     const urlSearchParams = new URLSearchParams(window.location.search);
     const mobileOpenUrl = urlSearchParams.get('url');
     if (mobileOpenUrl) {
@@ -25,14 +28,7 @@ if (isMobile) {
     } else {
       openLink(transformUniversalToNativeDeepLink(window.location.href))
     }
-
-    // setTimeout(() => {
-    //     if (isIOS && !mobileOpenUrl) {
-    //         openLink(iOSLink) // Disable on iOS only
-    //     } else if (isAndroid) {
-    //         openLink(androidLink)
-    //     }
-    // },  666)
+  }
 }
 
 function App() {
