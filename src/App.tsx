@@ -18,16 +18,12 @@ const transformUniversalToNativeDeepLink = function (url: string) {
 }
 
 if (isMobile) {
-  if (isIOS) {
-    openLink(iOSLink)
+  const urlSearchParams = new URLSearchParams(window.location.search);
+  const mobileOpenUrl = urlSearchParams.get('url');
+  if (mobileOpenUrl) {
+      openLink(`subwallet://browser/?url=${encodeURIComponent(mobileOpenUrl)}`)
   } else {
-    const urlSearchParams = new URLSearchParams(window.location.search);
-    const mobileOpenUrl = urlSearchParams.get('url');
-    if (mobileOpenUrl) {
-        openLink(`subwallet://browser/?url=${encodeURIComponent(mobileOpenUrl)}`)
-    } else {
-      openLink(transformUniversalToNativeDeepLink(window.location.href))
-    }
+    openLink(transformUniversalToNativeDeepLink(window.location.href))
   }
 }
 
