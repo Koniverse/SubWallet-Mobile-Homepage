@@ -17,7 +17,7 @@ const transformUniversalToNativeDeepLink = function (url: string) {
   return url.replace('https://mobile.subwallet.app/', 'subwallet://');
 }
 
-if (isMobile) {
+if (isMobile && isAndroid) {
   const urlSearchParams = new URLSearchParams(window.location.search);
   const mobileOpenUrl = urlSearchParams.get('url');
   if (mobileOpenUrl) {
