@@ -17,13 +17,17 @@ const transformUniversalToNativeDeepLink = function (url: string) {
   return url.replace('https://mobile.subwallet.app/', 'subwallet://');
 }
 
-if (isMobile && isAndroid) {
-  const urlSearchParams = new URLSearchParams(window.location.search);
-  const mobileOpenUrl = urlSearchParams.get('url');
-  if (mobileOpenUrl) {
-      openLink(`subwallet://browser/?url=${encodeURIComponent(mobileOpenUrl)}`)
+if (isMobile) {
+  if (isIOS) {
+    openLink(iOSLink)
   } else {
-    openLink(transformUniversalToNativeDeepLink(window.location.href))
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const mobileOpenUrl = urlSearchParams.get('url');
+    if (mobileOpenUrl) {
+        openLink(`subwallet://browser/?url=${encodeURIComponent(mobileOpenUrl)}`)
+    } else {
+      openLink(transformUniversalToNativeDeepLink(window.location.href))
+    }
   }
 }
 
