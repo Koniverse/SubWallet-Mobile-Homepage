@@ -9,8 +9,8 @@ const isMobile = isIOS || isAndroid;
 const iOSLink = 'https://apps.apple.com/vn/app/subwallet-polkadot-wallet/id1633050285'
 const androidLink = 'https://play.google.com/store/apps/details?id=app.subwallet.mobile'
 
-const openLink = function(url: string) {
-    window.location.replace(url)
+const openLink = function (url: string) {
+  window.location.replace(url)
 }
 
 const transformUniversalToNativeDeepLink = function (url: string) {
@@ -18,35 +18,31 @@ const transformUniversalToNativeDeepLink = function (url: string) {
 }
 
 if (isMobile) {
-  if (isIOS) {
-    openLink(iOSLink)
+  const urlSearchParams = new URLSearchParams(window.location.search);
+  const mobileOpenUrl = urlSearchParams.get('url');
+  if (mobileOpenUrl) {
+    openLink(`subwallet://browser/?url=${encodeURIComponent(mobileOpenUrl)}`)
   } else {
-    const urlSearchParams = new URLSearchParams(window.location.search);
-    const mobileOpenUrl = urlSearchParams.get('url');
-    if (mobileOpenUrl) {
-        openLink(`subwallet://browser/?url=${encodeURIComponent(mobileOpenUrl)}`)
-    } else {
-      openLink(transformUniversalToNativeDeepLink(window.location.href))
-    }
+    openLink(transformUniversalToNativeDeepLink(window.location.href))
   }
 }
 
 function App() {
-    return (
+  return (
     <div className="app-wrapper">
       <header className="app-container">
         <div className="logo">
-            <img src="/subwallet-logo.svg" alt="SubWallet"/>
+          <img src="/subwallet-logo.svg" alt="SubWallet"/>
         </div>
         <h4>Install SubWallet on your mobile device</h4>
-      <div className="install-area">
-        <a href={iOSLink} className='app-link'>
+        <div className="install-area">
+          <a href={iOSLink} className='app-link'>
             <img alt="Download from App Store" src='/app-store-badge.png'/>
-        </a>
-        <a href={androidLink} className='app-link'>
+          </a>
+          <a href={androidLink} className='app-link'>
             <img alt="Get it on Google Play" src='/google-play-badge.svg'/>
-        </a>
-      </div>
+          </a>
+        </div>
       </header>
     </div>
   );
