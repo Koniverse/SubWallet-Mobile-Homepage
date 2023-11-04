@@ -6,6 +6,7 @@ const detect = new MobileDetect(navigator.userAgent, 1200);
 const isAndroid = detect.os() === 'AndroidOS'
 const isIOS = detect.os() === 'iOS'
 const isMobile = isIOS || isAndroid;
+const scheme = 'subwallet://';
 const iOSLink = 'https://apps.apple.com/vn/app/subwallet-polkadot-wallet/id1633050285'
 const androidLink = 'https://play.google.com/store/apps/details?id=app.subwallet.mobile'
 
@@ -14,14 +15,14 @@ const openLink = function (url: string) {
 }
 
 const transformUniversalToNativeDeepLink = function (url: string) {
-  return url.replace('https://mobile.subwallet.app/', 'subwallet://');
+  return url.replace(`${window.location.origin}/`, scheme);
 }
 
 if (isMobile) {
   const urlSearchParams = new URLSearchParams(window.location.search);
   const mobileOpenUrl = urlSearchParams.get('url');
   if (mobileOpenUrl) {
-    openLink(`subwallet://browser/?url=${encodeURIComponent(mobileOpenUrl)}`)
+      openLink(`${scheme}browser/?url=${encodeURIComponent(mobileOpenUrl)}`)
   } else {
     openLink(transformUniversalToNativeDeepLink(window.location.href))
   }
@@ -32,17 +33,20 @@ function App() {
     <div className="app-wrapper">
       <header className="app-container">
         <div className="logo">
-          <img src="/subwallet-logo.svg" alt="SubWallet"/>
+            <img className="logo-img" src="/subwallet-logo.webp" alt="SubWallet"/>
+            <svg width="120" height="21" viewBox="0 0 120 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M10.5677 6.33355H13.0418C13.0418 6.33355 13.0418 0.980089 7.12024 0.875862C7.12024 0.875862 1.95306 0.330176 0.898511 4.6319C0.898511 4.6319 0.322571 7.38486 1.85568 8.72517C3.21607 9.8764 4.87834 10.6219 6.64973 10.876C8.10984 11.1168 11.5736 12.1121 11.2248 15.1058C10.876 18.0995 2.7399 19.2232 2.51276 13.1315H0.00624213C0.00624213 13.1315 -0.391227 18.597 5.15719 19.753C10.7056 20.9085 13.8854 17.634 13.6258 13.9021C13.3663 10.1697 9.50505 9.15069 6.70654 8.54858C3.90797 7.94691 3.04813 6.60618 3.29146 5.20988C3.53484 3.81316 5.35999 3.2356 6.82011 3.2356C7.72613 3.1822 8.61862 3.47291 9.31518 4.04874C10.0117 4.62458 10.4597 5.44203 10.5677 6.33355ZM16.6876 6.53428H19.1779V17.3454H25.0914V6.53428H27.6465V19.9619H16.6876V6.53428ZM38.8085 6.65562C39.2477 6.65131 39.6865 6.69955 40.1144 6.7999C40.8736 6.99242 41.5735 7.36712 42.1525 7.89084C42.731 8.41413 43.1702 9.0705 43.4318 9.80181C43.7461 10.5999 43.9058 11.4492 43.9024 12.3058V13.911C43.9028 14.3473 43.8619 14.7823 43.7809 15.2113C42.791 19.9945 39.1572 19.7619 39.1572 19.7619H36.8532C35.6161 19.6581 34.4608 19.1068 33.6087 18.2127L33.2842 19.9786H31.1914V0.973107H33.6249V7.9395C34.6001 7.07296 35.8759 6.61298 37.1862 6.65562H38.8085ZM40.4035 16.5085C40.9297 15.9878 41.2257 15.2815 41.2257 14.545V11.752C41.2257 11.0155 40.9297 10.3092 40.4035 9.78845C39.8772 9.26775 39.1633 8.97488 38.4189 8.97488H36.5694C35.825 8.97488 35.1111 9.26775 34.5848 9.78845C34.0586 10.3092 33.7628 11.0155 33.7628 11.752V14.545C33.7628 15.2815 34.0586 15.9878 34.5848 16.5085C35.1111 17.0292 35.825 17.3221 36.5694 17.3221H38.4189C39.1633 17.3221 39.8772 17.0292 40.4035 16.5085ZM44.2994 0.973107H46.8707L50.7888 17.3221H51.251L54.3987 0.973107H58.941L62.21 17.3862H62.648L66.647 1.14194H69.1861L64.6599 19.9786H60.1333L56.9051 3.62185H56.4506L53.3927 19.9786H48.8743L44.2994 0.973107ZM80.7736 6.59409V17.3329H82.5091V19.861H78.5993L78.3072 18.3842C78.3072 18.3842 76.9608 20.4873 73.4406 19.861C69.9199 19.2348 69.1085 16.2975 69.9199 13.8176C70.7309 11.3377 74.4627 11.4096 74.4627 11.4096H78.275V9.00207H70.9742V6.59409H80.7736ZM73.9029 17.5655C77.3583 18.2718 78.2184 15.4469 78.2184 15.4469V13.6729H74.3734C72.6697 13.986 72.402 14.893 72.402 14.893C72.2945 15.1648 72.2487 15.4572 72.2683 15.7488C72.2879 16.04 72.3728 16.3238 72.516 16.5792C72.6597 16.8346 72.8582 17.0555 73.098 17.2261C73.3374 17.3966 73.6125 17.5125 73.9029 17.5655ZM88.0778 1.21229H85.6441V20.0011H88.0778V1.21229ZM90.8552 1.21229H93.2889V20.0011H90.8552V1.21229ZM102.889 6.78339C102.889 6.78339 97.4622 5.85224 95.9208 10.7961C95.9208 10.7961 95.0368 14.6646 96.448 17.2733C97.0422 18.2057 97.8901 18.9534 98.8948 19.4306C99.899 19.9073 101.019 20.0943 102.126 19.9698C106.223 19.6731 107.634 17.5623 107.634 15.9571H105.046C105.046 15.9571 105.046 17.4817 102.881 17.5058C102.774 17.507 102.666 17.5087 102.557 17.5103L102.556 17.5103C100.455 17.5422 98.0177 17.5791 98.0947 14.5121H108.023C108.023 14.5121 108.964 7.40918 102.889 6.78339ZM98.1678 12.1765C98.0625 10.965 99.287 8.78179 102.37 8.96613C103.23 8.96613 104.056 9.30465 104.664 9.90675C105.272 10.5089 105.614 11.3254 105.614 12.1765H98.1678ZM114.419 1.03291H111.961L111.994 6.63532H109.698V9.13934H111.961V19.9901H120V17.3737H114.443V9.08293H119.035V6.63532H114.419V1.03291Z" fill="white"/>
+            </svg>
         </div>
-        <h4>Install SubWallet on your mobile device</h4>
-        <div className="install-area">
-          <a href={iOSLink} className='app-link'>
-            <img alt="Download from App Store" src='/app-store-badge.png'/>
-          </a>
-          <a href={androidLink} className='app-link'>
-            <img alt="Get it on Google Play" src='/google-play-badge.svg'/>
-          </a>
-        </div>
+        <span className="download-title">Install SubWallet on your mobile device</span>
+      <div className="install-area">
+        {isIOS ? (<a href={iOSLink} className='app-link'>
+            <img alt="Download from App Store" src='/app-store-badge.svg'/>
+        </a>)
+        : (<a href={androidLink} className='app-link'>
+            <img alt="Get it on Google Play" src='/play-store-badge.svg'/>
+        </a>)}
+      </div>
       </header>
     </div>
   );
