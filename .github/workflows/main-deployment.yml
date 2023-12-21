@@ -61,7 +61,7 @@ jobs:
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
           status: ${{ job.status }}
-          username: GitHub Actions Test Notifier
+          username: Mobile Link Worker
           title: ${{ github.workflow }}
           description: |
             The Mobile Link deployment has been completed.
