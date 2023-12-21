@@ -1,0 +1,70 @@
+name: Mobile Link Build
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  master:
+    if: "! startsWith(github.event.head_commit.message, '[CI Skip]')"
+    runs-on: ubuntu-22.04
+    name: Build and Deploy
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Build
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'yarn'
+      - name: Set Input
+        id: setup_input
+        run: |
+          time_tag="$(date +'%Y-%m-%d_%H-%M')"
+          ref_with_prefix="${{ github.ref }}"
+          ref_without_prefix="${ref_with_prefix#refs/heads/}"
+          
+          if [[ -n "${{ github.event.pull_request }}" ]]; then
+            echo "file_name=pr-${{ github.event.pull_request.number }}-$time_tag" >> $GITHUB_OUTPUT
+          else
+            echo "file_name=$ref_without_prefix-$time_tag" >> $GITHUB_OUTPUT
+          fi
+          npm install -g npm@latest
+      - name: Build
+        run: |
+          yarn install --immutable | grep -v 'YN0013'
+          yarn build
+      - name: Deploy to Cloudflare Pages
+        id: cloudflare_deployment
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: 'sw-github-action'
+          gitHubToken: ${{ secrets.GH_AUTOMATION_TOKEN }}
+          branch: ${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.number) || github.ref_name }}
+          directory: './build'
+          wranglerVersion: '3'
+      - name: Deploy to Github Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GH_AUTOMATION_TOKEN }}
+          publish_dir: ./build
+      # === Send notification ===
+      - name: Notify to Discord
+        uses: sarisia/actions-status-discord@v1
+        if: always()
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          status: ${{ job.status }}
+          username: GitHub Actions Test Notifier
+          title: ${{ github.workflow }}
+          description: |
+            The Mobile Link deployment has been completed.
+            - Cloudflare URL:
+              - URL: ${{ steps.cloudflare_deployment.outputs.url }}
+              - Alias: ${{ steps.cloudflare_deployment.outputs.alias }}
