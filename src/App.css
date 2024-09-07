@@ -39,11 +39,20 @@
     font-weight: 500;
 }
 
+.install-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
 .install-area {
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 11.178px;
     border: 0.918px solid var(--icon-white-100-white, #FFF);
-    padding: 16px 44px 10px 44px; 
+    padding: 16px 44px 10px 44px;
+    margin-left: 8px;
+    margin-right: 8px;
 }

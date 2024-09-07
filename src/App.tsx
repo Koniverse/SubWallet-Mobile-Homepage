@@ -39,14 +39,18 @@ function App() {
             </svg>
         </div>
         <span className="download-title">Install SubWallet on your mobile device</span>
-      <div className="install-area">
-        {isIOS ? (<a href={iOSLink} className='app-link'>
-            <img alt="Download from App Store" src='/app-store-badge.svg'/>
-        </a>)
-        : (<a href={androidLink} className='app-link'>
-            <img alt="Get it on Google Play" src='/play-store-badge.svg'/>
-        </a>)}
-      </div>
+        <div className="install-row">
+          {!isAndroid && <div className="install-area">
+            <a href={iOSLink} className='app-link'>
+                <img alt="Download from App Store" src='/app-store-badge.svg'/>
+            </a>
+          </div>}
+          {!isIOS && <div className="install-area">
+            <a href={androidLink} className='app-link'>
+                <img alt="Get it on Google Play" src='/play-store-badge.svg'/>
+            </a>
+          </div>}
+        </div>
       </header>
     </div>
   );
